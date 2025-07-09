@@ -4,19 +4,17 @@
 
 #define WIDTH 900
 #define HEIGHT 600
-#define COLOR_WHITE 0xFFFFFF
+
+
+
+//#define COLOR_WHITE 0xFFFFFF
 
 // Function declarations
 bool checkMandelbrot(double re, double im, int maxIter, double escapeLimit);
 void drawMandelbrot(SDL_Surface *psurface);
 
 int main() {
-    printf("Rendering Mandelbrot set...\n");
-
-    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        printf("SDL Init Error: %s\n", SDL_GetError());
-        return 1;
-    }
+    printf("hello Mandelbrot set");
 
     SDL_Window *pwindow = SDL_CreateWindow(
         "Mandelbrot", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
@@ -55,8 +53,11 @@ bool checkMandelbrot(double re, double im, int maxIter, double escapeLimit) {
 }
 
 void drawMandelbrot(SDL_Surface *psurface) {
-    int maxIterations = 100;
-    double escapeLimit = 1000.0;
+
+    int r=1;
+    int g=1;
+    int b=1;
+
 
     for (int x = 0; x < WIDTH; x++) {
         for (int y = 0; y < HEIGHT; y++) {
@@ -64,9 +65,18 @@ void drawMandelbrot(SDL_Surface *psurface) {
             double re = (x - WIDTH / 2.0) * 4.0 / WIDTH;
             double im = (y - HEIGHT / 2.0) * 4.0 / WIDTH;
 
-            if (checkMandelbrot(re, im, maxIterations, escapeLimit)) {
+
+            //color
+            // the color is very strange for some reason
+
+            if (checkMandelbrot(re, im, 255, 1000.0)) {
                 SDL_Rect pixel = { x, y, 1, 1 };
-                SDL_FillRect(psurface, &pixel, COLOR_WHITE);
+
+                Uint32 color =SDL_MapRGB(psurface -> format, r,g,b);
+                SDL_FillRect(psurface, &pixel, color);
+                r++;
+                g++;
+                b++;
             }
         }
     }
