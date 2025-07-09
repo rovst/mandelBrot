@@ -7,7 +7,7 @@
 
 
 
-//#define COLOR_WHITE 0xFFFFFF
+#define COLOR_WHITE 0xFFFFFF
 
 // Function declarations
 bool checkMandelbrot(double re, double im, int maxIter, double escapeLimit);
@@ -67,16 +67,17 @@ void drawMandelbrot(SDL_Surface *psurface) {
 
 
             //color
-            // the color is very strange for some reason
 
-            if (checkMandelbrot(re, im, 255, 1000.0)) {
+            if (checkMandelbrot(re, im, 255, 2.0)) {
                 SDL_Rect pixel = { x, y, 1, 1 };
 
-                Uint32 color =SDL_MapRGB(psurface -> format, r,g,b);
+                Uint32 color =SDL_MapRGB(psurface -> format, r%256,g%256,b%256);
                 SDL_FillRect(psurface, &pixel, color);
-                r++;
-                g++;
-                b++;
+
+                r=r+1;
+                g=g+2;
+                b=b+3;
+
             }
         }
     }
